@@ -1,0 +1,5 @@
+[DB 데이터]
+
+1. SQLite인 경우, db.sqlite3 삭제
+2. views.py에 데이터 생성 코드 실행
+3. views.py에 데이터 생성 코드 제거
