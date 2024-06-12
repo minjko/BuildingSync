@@ -3,28 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Node Tree</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
-        /* 부모 노드 스타일 */
-        details {
-            padding-left: 20px; /* 들여쓰기 크기 */
-        }
-
-        /* 자식 노드 스타일 */
-        details > ul {
-            padding-left: 20px; /* 들여쓰기 크기 */
-            list-style-type: none; /* 삼각형 아이콘 숨김 */
-        }
-
-        /* 자식 노드가 있는 경우 삼각형 아이콘 스타일 */
-        details > ul > li::before {
-            content: "\25B6"; /* 삼각형 아이콘 (▶) */
-            margin-right: 5px; /* 아이콘과 텍스트 사이 간격 */
-        }
-
-        /* summary 요소 스타일 */
-        summary {
-            cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능하도록 함 */
+        ul {
+            list-style-type: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -35,34 +17,36 @@
 <div id="node-tree"></div>
 
 <script>
-$(document).ready(function(){
-    $.ajax({
-        url: "/schema/api/nodes/",  // API endpoint URL
-        type: "GET",
-        success: function(data) {
-            function renderTree(data) {
-                var fragment = $(document.createDocumentFragment());
-
-                data.forEach(function(node) {
-                    var details = $('<details></details>');
-                    var summary = $('<summary></summary>').text(node.name);
-
-                    details.append(summary);
-
-                    if (node.children && node.children.length > 0) {
-                        var childNodes = renderTree(node.children);
-                        details.append(childNodes);
-                    }
-
-                    fragment.append(details);
-                });
-
-                return fragment;
-            }
-
-            $('#node-tree').append(renderTree(data));
+document.addEventListener("DOMContentLoaded", function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/schema/api/nodes/");
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            var nodeTree = renderTree(data);
+            document.getElementById("node-tree").appendChild(nodeTree);
+        } else {
+            console.error("Failed to fetch data");
         }
-    });
+    };
+    xhr.send();
+
+    function renderTree(data) {
+        var ul = document.createElement("ul");
+        data.forEach(function(node) {
+            var li = document.createElement("li");
+            var details = document.createElement("details");
+            var summary = document.createElement("summary");
+            summary.textContent = node.name;
+            var childUl = renderTree(node.children);
+            
+            details.appendChild(childUl);
+            details.appendChild(summary);
+            li.appendChild(details);
+            ul.appendChild(li);
+        });
+        return ul;
+    }
 });
 </script>
 
