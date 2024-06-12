@@ -26,7 +26,9 @@ class NodeView(views.APIView):
 
 
 def node_tree_view(request):
+  
   return render(request, 'schema/node_tree.html')
+
 
 """ Data 생성 
 root = Node.objects.create(name='BuildingSync')
@@ -35,7 +37,7 @@ programs = Node.objects.create(name='Programs', parent=root)
 facilities = Node.objects.create(name='Facilities', parent=root)
 
 program = Node.objects.create(name='Program', parent=programs)
-facility = Node.objects.create(name='Facilitie', parent=facilities)
+facility = Node.objects.create(name='Facilitiy', parent=facilities)
 
 programData = Node.objects.create(name='ProgramData' , parent=program, dictionary='[설명] ProgramData')
 programFundingSource = Node.objects.create(name='ProgramFundingSource' , parent=program, dictionary='[설명] Program Funding Source')
