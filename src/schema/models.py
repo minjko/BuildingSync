@@ -19,7 +19,7 @@ class Node(TimeStampedModel, MPTTModel):
   sub_display_name = models.CharField(_('화면용 이름'), max_length=255, null=True, db_column='SUB_DISPLAY-NAME')
   dictionary = models.CharField(_('설명'), max_length=255, null=True, db_column='DOCUMENTATION')
   
-  enumerations = models.JSONField(default=dict) # SQLite 외 : models.ArrayField(_('속성값 목록'), models.CharField(max_length=255), null=True, blank=True, db_column='ENUMERATIONS')  
+  enumerations = models.JSONField(default=dict, db_column='ENMERATIONS') # SQLite 외 : models.ArrayField(_('속성값 목록'), models.CharField(max_length=255), null=True, blank=True, db_column='ENUMERATIONS')  
   enumerations_html = models.CharField(_('속성값 목록 HTML'), max_length=255, null=True, blank=True, default='', db_column='ENUMERATIONS_HTML')
 
   class Meta:
