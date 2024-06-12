@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Node Tree</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>Node Tree</h1>
+
+<div id="node-tree"></div>
+
+<script>
+$(document).ready(function(){
+    $.ajax({
+        url: "/schema/api/nodes/",  // API endpoint URL
+        type: "GET",
+        success: function(data) {
+            console.log("Data received:", data);
+            function renderTree(data) {
+                var ul = $('<ul></ul>');
+                data.forEach(function(node) {
+                    var li = $('<li></li>').text(node.name);
+                    if (node.children && node.children.length > 0) {
+                        li.append(renderTree(node.children));
+                    }
+                    ul.append(li);
+                });
+                return ul;
+            }
+            
+            $('#node-tree').append(renderTree(data));
+        },
+        error: function(error) {
+            console.log("Error:", error);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
