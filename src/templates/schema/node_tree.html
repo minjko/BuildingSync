@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             var data = JSON.parse(xhr.responseText);
-            var nodeTree = renderTree(data);
+            var nodeTree = drawTree(data);
             document.getElementById("node-tree").appendChild(nodeTree);
         } else {
             console.error("Failed to fetch data");
@@ -31,19 +31,33 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     xhr.send();
 
-    function renderTree(data) {
+    function drawTree(data) {
         var ul = document.createElement("ul");
         data.forEach(function(node) {
             var li = document.createElement("li");
             var details = document.createElement("details");
             var summary = document.createElement("summary");
-            summary.textContent = node.name;
-            var childUl = renderTree(node.children);
+            var childUl;
             
+            summary.textContent = node.name;
+            
+            if (node.children && node.children.length) {
+                childUl = drawTree(node.children);
+            } else {
+                childUl = document.createTextNode('aa'); 
+            }
+
             details.appendChild(childUl);
             details.appendChild(summary);
             li.appendChild(details);
             ul.appendChild(li);
+
+
+
+
+
+
+
         });
         return ul;
     }
