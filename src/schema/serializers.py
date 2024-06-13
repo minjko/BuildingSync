@@ -23,4 +23,4 @@ class NodeViewSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Node
-    fields = ['nodeId', 'name', 'children']
+    fields = ['nodeId', 'name', 'children', 'dictionary', 'enumerations']

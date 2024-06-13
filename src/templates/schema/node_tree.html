@@ -8,81 +8,130 @@
             list-style-type: none;
             cursor: pointer;
         }
+        summary.open::marker {
+            color: purple;
+            font-size: 20px;
+        }
+        summary::marker {
+            color: orange;
+            font-size: 20px;
+        }
+        
     </style>
 </head>
+
+
+
 <body>
+    <h1>Node Tree</h1>
 
-<h1>Node Tree</h1>
+    <!-- * start schema -->
+    <div id="node-tree"></div>
+    <!-- * end schema -->
 
-<div id="node-tree"></div>
-<div id="node-dict"></div>
-<div id="node-enums"></div>
+    <!-- * start dictionary -->
+    <div id="node-dict"></div>
+    <!-- * end dictionary -->
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/schema/api/nodes/");
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            var data = JSON.parse(xhr.responseText);
-            var nodeTree = drawTree(data);
 
-            document.getElementById("node-tree").appendChild(nodeTree);
-        } else {
-            console.error("Failed to fetch data");
-        }
-    };
-    xhr.send();
+    <!-- * start enumerations -->
+    <div id="node-enums"></div>
+    <!-- * end enumerations -->
 
-    function drawTree(data) {
-        var ul = document.createElement("ul");
-        data.forEach(function(node) {                               // node : forEach 콜백함수 매개변수 
-            var li = document.createElement("li");
-            var details = document.createElement("details");
-            var summary = document.createElement("summary");
-            var childUl;
-            
-            summary.textContent = node.name;
-            
-            summary.addEventListener("click", function() {
-                node_dict = "node-dict";
-                displayDict(node, node_dict);
-            });
 
-            if (node.children && node.children.length) {
-                childUl = drawTree(node.children);
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/schema/api/nodes/");
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                var tree = document.getElementById("node-tree")
+                var section = document.createElement("section")
+                section.classList.add("tree");
+
+                var nodeTree = drawTree(data);
+                
+                tree.appendChild(section);
+                section.appendChild(nodeTree);
             } else {
-                childUl = document.createTextNode('aa'); 
+                console.error("Failed to fetch data");
+            }
+        };
+
+        xhr.send();
+
+        function drawTree(data) {
+            var ul = document.createElement("ul");
+            ul.classList.add("children");
+            data.forEach(function(node) {                               // node : forEach 콜백함수 매개변수 
+                var li = document.createElement("li");
+                li.classList.add("child");
+                var summary = document.createElement("summary");
+                summary.classList.add("parent");
+                var div = document.createElement("div");
+                div.classList.add("leaf");
+                var details = document.createElement("details");
+                details.classList.add("class");
+                var childUl;
+                
+                // 사전(설명) 위치
+                dict_position = "node-dict";
+                summary.addEventListener("click", function() {
+                    displayDict(node, dict_position);
+                });
+
+                div.addEventListener("click", function() {
+                    displayDict(node, dict_position);
+                });
+
+                if (node.children && node.children.length) {
+                    childUl = drawTree(node.children);
+                    
+                    summary.textContent = node.name;
+
+                    details.appendChild(childUl);
+                    details.appendChild(summary);
+                    li.appendChild(details);
+                } else {
+                    childUl = drawTree(node.children);
+
+                    div.textContent = node.name;
+                    
+                    li.appendChild(childUl);
+                    li.appendChild(div);
+                }
+                ul.appendChild(li);
+            });
+            return ul;
+        }
+
+        
+
+        function displayDict(node, position_id) {
+            var div = document.getElementById(position_id);
+            var dict = document.createElement("div");
+            var br1 = document.createElement("br");
+            var br2 = document.createElement("br");
+
+            div.innerHTML = "";
+            
+            if  (node.dictionary && node.dictionary.length) {
+                txt = node.dictionary;
+            } else {
+                txt = "OOOO";
             }
 
-            details.appendChild(childUl);
-            details.appendChild(summary);
-            li.appendChild(details);
-            ul.appendChild(li);
-        });
-        return ul;
-    }
-
-    function displayDict(node, elementId) {
-        
-        var div = document.getElementById(elementId);
-        var dict = document.createElement("div");
-
-        div.innerHTML = "";
-        
-        if  (node.dictionary && node.dictionary.length) {
-            txt = node.name;
-        } else {
-            txt = "설명 없음";
+            dict.textContent = txt;
+            div.appendChild(br1);
+            div.appendChild(br2);
+            div.appendChild(dict);
         }
-
-        dict.textContent = txt;
-        div.appendChild(dict);
-    }
-
-    
-});
-</script>
+        
+    });
+    </script>
 
 </body>
 </html>

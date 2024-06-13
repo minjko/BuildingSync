@@ -26,7 +26,7 @@ class Node(MPTTModel):
     order_insertion_by = ['nodeId']
     
   def __str__(self):
-    return f'{self.id} -> {self.nodeId}: {self.name}'
+    return f'{self.nodeId}: {self.name}'
     
     
   
