@@ -63,6 +63,12 @@ document.addEventListener("DOMContentLoaded", function() {
         return ul;
     }
 
+    // 자식이 있고 열린 상태의 노드 -> 검은색 세모
+    
+    // 자식이 있고 닫힌 상태의 노드 -> 하얀색 세모
+
+    // 자식이 없고 열린 상태의 노드 -> 세모 없음
+
     function displayDict(node, elementId) {
         
         var div = document.getElementById(elementId);
@@ -71,12 +77,16 @@ document.addEventListener("DOMContentLoaded", function() {
         div.innerHTML = "";
         
         if  (node.dictionary && node.dictionary.length) {
-            txt = node.name;
+            txt = node.dictionary;
         } else {
             txt = "설명 없음";
         }
 
         dict.textContent = txt;
+        var br1 = document.createElement("br");
+        var br2 = document.createElement("br");
+        div.appendChild(br1);
+        div.appendChild(br2);
         div.appendChild(dict);
     }
 
