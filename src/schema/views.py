@@ -23,6 +23,11 @@ class NodeView(views.APIView):
     
     return Response(serializer.data) # render(request, 'schema/detail.html') #, {'schema': self.queryset})
 
+    # // 자식이 있고 열린 상태의 노드 -> 검은색 세모
+    
+    # // 자식이 있고 닫힌 상태의 노드 -> 하얀색 세모
+
+    # // 자식이 없고 열린 상태의 노드 -> 세모 없음
 
 
 def node_tree_view(request):
