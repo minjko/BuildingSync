@@ -31,9 +31,7 @@ class NodeView(views.APIView):
 
 
 def node_tree_view(request):
-  
-  # a = Node.objects.exclude(dictionary__isnull=True)
-  # print(a)
+
   return render(request, 'schema/node_tree.html')
 
 
