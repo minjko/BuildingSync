@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Schema</title>
     <style>
-        ul {
+        li {
             list-style-type: none;
             cursor: pointer;
         }
@@ -117,16 +117,16 @@
             var br2 = document.createElement("br");
 
             div.innerHTML = "";
-            
+
             if  (node.dictionary && node.dictionary.length) {
-                txt = node.dictionary;
+                dict.textContent = node.dictionary;
             } else {
-                txt = "OOOO";
+                dict.textContent = "[설명]: OOO";
             }
 
-            dict.textContent = txt;
             div.appendChild(br1);
             div.appendChild(br2);
+
             div.appendChild(dict);
         }
         
