@@ -3,11 +3,16 @@ from django.utils.translation import gettext as _
 
 from mptt.models import MPTTModel, TreeForeignKey
 
-
-class Node(MPTTModel):
-  nodeId = models.BigAutoField(_('ID'), primary_key=True, db_column='ID')
+class TimeStampedModel(models.Model):
   reg_dt = models.DateTimeField(_('생성일'), auto_now_add=True, db_column='REG_DT')
   chg_dt = models.DateTimeField(_('수정일'), auto_now=True, db_column='CHG_DT')
+  
+  class Meta:
+    abstract = True
+
+
+class Node(MPTTModel, TimeStampedModel): # 첫번째 인자: MPTTModel
+  nodeId = models.BigAutoField(_('ID'), primary_key=True, db_column='ID')
   name = models.CharField(_('이름'), max_length=255, db_column='NAME')
   parent = TreeForeignKey('self', verbose_name=_('상위분류'), null=True, blank=True, on_delete=models.CASCADE, related_name='children', db_index=True, db_column='PARENT')
   
@@ -28,10 +33,10 @@ class Node(MPTTModel):
   def __str__(self):
     return f'{self.nodeId}: {self.name}'
     
-    
+# TreeManager
   
   
-# class LeafNode(models.Model):
+# class LeafNode(TimeStampedModel):
 #   leafNodeId = models.BigAutoField(_('ID'), primary_key=True, db_column='ID')
 #   name = models.CharField(_('이름'), max_length=255)
 #   parent = TreeForeignKey('Node', verbose_name=_('상위분류'), on_delete=models.SET_NULL, null=True, blank=True, db_index=True, db_column='Node')
