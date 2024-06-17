@@ -31,7 +31,7 @@ class Node(MPTTModel, TimeStampedModel): # 첫번째 인자: MPTTModel
     order_insertion_by = ['nodeId']
     
   def __str__(self):
-    return f'{self.nodeId}: {self.name}'
+    return f'{self.name}({self.nodeId})'
   
 # class LeafNode(TimeStampedModel):
 #   leafNodeId = models.BigAutoField(_('ID'), primary_key=True, db_column='ID')
