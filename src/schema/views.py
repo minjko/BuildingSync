@@ -9,25 +9,16 @@ from django.shortcuts import render
 from .models import Node
 from .serializers import NodeViewSerializer
 
-# https://velog.io/@duo22088/DRF-Renderer-%EB%A5%BC-%ED%86%B5%ED%95%9C-%EB%8B%A4%EC%96%91%ED%95%9C-%EC%9D%91%EB%8B%B5
 
 class NodeView(views.APIView):
-  #queryset = Node.objects.all()
-  #renderer_classes = [TemplateHTMLRenderer] 
-  #template_name = 'schema/detail.html'
   
   def get(self, request, *args, **kwargs):
     
     nodes = Node.objects.filter(parent=None)
     serializer = NodeViewSerializer(nodes, many=True)
     
-    return Response(serializer.data) # render(request, 'schema/detail.html') #, {'schema': self.queryset})
+    return Response(serializer.data) 
 
-    # // 자식이 있고 열린 상태의 노드 -> 검은색 세모
-    
-    # // 자식이 있고 닫힌 상태의 노드 -> 하얀색 세모
-
-    # // 자식이 없고 열린 상태의 노드 -> 세모 없음
 
 
 def node_tree_view(request):
