@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Node
+from schema.models import Node
 
 """ SUPER USER """
 # username: schema

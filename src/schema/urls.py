@@ -1,15 +1,13 @@
 from django.urls import path
 
-from .views import NodeView
-from .views import node_tree_view
+from schema.views.TreeView import node_tree_view, NodeView 
 
 
 urlpatterns = [
   
   # api
   path("api/nodes/", NodeView.as_view(), name="node-api"),
-  
-  # view
+  # tree
   path("nodes/", node_tree_view, name="node-tree-view")
 
 ]

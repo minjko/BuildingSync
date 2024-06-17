@@ -6,24 +6,24 @@ from rest_framework.response import Response
 
 from django.shortcuts import render
 
-from .models import Node
-from .serializers import NodeViewSerializer
+from schema.models import Node
+from schema.serializers import NodeViewSerializer
 
 
 class NodeView(views.APIView):
   
   def get(self, request, *args, **kwargs):
-    
     nodes = Node.objects.filter(parent=None)
     serializer = NodeViewSerializer(nodes, many=True)
-    
     return Response(serializer.data) 
 
 
 
 def node_tree_view(request):
-
   return render(request, 'schema/node_tree.html')
+
+
+
 
 
 """ Data 생성 
