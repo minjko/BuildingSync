@@ -1,6 +1,6 @@
 from django.urls import path
 
-from schema.views.TreeView import node_tree_view, NodeView 
+from schema.views import node_tree_view, NodeView 
 
 
 urlpatterns = [

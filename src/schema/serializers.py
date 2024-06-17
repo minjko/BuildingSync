@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Node
+from schema.models import Node
 
 
 class RecursiveField(serializers.Serializer):
@@ -16,7 +16,8 @@ class NodeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
   
-  
+
+# Node Tree  
 class NodeViewSerializer(serializers.ModelSerializer):
   
   children = RecursiveField(many=True)
