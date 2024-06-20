@@ -11,6 +11,7 @@ from drf_yasg.generators import OpenAPISchemaGenerator
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('schema/', include("schema.urls")),
+    path('schema/account/', include("user.urls")),
 ]
 
 

@@ -8,6 +8,43 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>    
 
     <style>
+        .row {
+            width: 100%;
+            display: flex;
+            gap: 30px;
+        }
+
+        .col1 {
+            width: 65%;
+            background-color: #f6f6f6;
+            padding: 30px 0;
+        }
+
+        .col2 {
+            width: calc(35% - 30px);
+        }
+
+        #node-tree {
+            font-size: 20px;
+            letter-spacing: 0px;
+            font-weight: 500;
+        }
+
+        #node-dict {
+            border: 1px solid #aaa;
+
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            min-height: 100px;
+
+            font-size: 18px;
+        }
+
+        #node-tree summary:hover, #node-tree div:hover {
+            background-color: #e5e5e5;
+        }
+
         li {
             list-style-type: none;
             cursor: pointer;
@@ -31,12 +68,12 @@
     <br>
     <div class="container">
         <div class="row">
-            <div class="col-9">
+            <div class="col1">
                 <!-- * start schema -->
                 <div id="node-tree"></div>
                 <!-- * end schema -->
             </div>
-            <div class="col-3">
+            <div class="col2">
                 <!-- * start dictionary -->
                 <div id="node-dict"></div>
                 <!-- * end dictionary -->
@@ -92,7 +129,7 @@
                 
                 // 사전(설명) 위치
                 dict_position = "node-dict";
-                summary.addEventListener("click", function() {
+                summary.addEventListener("click", function(e) {
                     displayDict(node, dict_position);
                 });
 

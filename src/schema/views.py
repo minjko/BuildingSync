@@ -7,6 +7,8 @@ from django.shortcuts import render
 from schema.models import Node
 from schema.serializers import NodeViewSerializer
 
+from django.contrib.auth.decorators import login_required
+
 
 class NodeView(views.APIView):
   
@@ -16,9 +18,12 @@ class NodeView(views.APIView):
     return Response(serializer.data) 
 
 
-
+@login_required
 def node_tree_view(request):
   return render(request, 'schema/node_tree.html')
+  # return redirect('login')
+
+
 
 
 

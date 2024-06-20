@@ -1,0 +1,26 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>Login</title>
+    <!-- Bootstrap CSS, JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>    
+  </head>
+
+  <body>
+    <form method="post" action="{% url 'user:login' %}">
+      {% csrf_token %}
+      {% include 'user/form_errors.html' %}
+      <div>
+        <label>ID&nbsp;&nbsp;</label>
+        <input type="text" name="username" id="username">
+      </div>
+      <div>
+        <label>PW</label>
+        <input type="text" name="password" id="password">
+      </div>
+      <br>
+      <button type="submit">Login</button>
+    </form>
+  </body>
+</html>

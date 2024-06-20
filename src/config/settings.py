@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     
     # app
     'schema',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,8 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGIN_REDIRECT_URL = '/schema/nodes'
 
 
 WSGI_APPLICATION = 'config.wsgi.application'
